@@ -33,6 +33,11 @@
   .teaser{margin:16px 0;border:1px dashed var(--border);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,.02)}
   .founders{margin:14px 0;border:2px solid var(--accent);background:linear-gradient(180deg,rgba(111,66,193,.10),rgba(111,66,193,.02));border-radius:14px;padding:14px}
   footer{color:var(--muted);border-top:1px solid var(--border);padding:14px;margin-top:16px}
+  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .tools .btn{padding:6px 10px}
+  .ok{color:var(--good)} .warn{color:var(--warn)}
   @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
 </style>
 </head>
@@ -41,13 +46,21 @@
   <div class="logo" aria-hidden="true"></div>
   <div class="title">Veltrax — Security & Compliance Map</div>
   <div class="spacer"></div>
-  <label class="mini" for="profile">Profile:</label>
-  <select id="profile" aria-label="Compliance profile">
-    <option value="soc2">SOC‑2</option>
-    <option value="hipaa">HIPAA</option>
-    <option value="gdpr">GDPR</option>
-  </select>
-  <button id="theme" class="toggle" aria-label="Toggle theme" style="margin-left:8px">Toggle theme</button>
+  <div class="toolbar">
+    <label class="mini" for="profile">Profile:</label>
+    <select id="profile" aria-label="Compliance profile">
+      <option value="soc2">SOC‑2</option>
+      <option value="hipaa">HIPAA</option>
+      <option value="gdpr">GDPR</option>
+    </select>
+    <label class="mini" for="role">Role:</label>
+    <select id="role" aria-label="Role selector">
+      <option value="viewer">Viewer</option>
+      <option value="officer">Compliance Officer</option>
+    </select>
+    <span id="roleBadge" class="badge" aria-live="polite">Mode: Viewer</span>
+  </div>
+  <button id="theme" class="toggle" aria-label="Toggle theme">Toggle theme</button>
 </header>
 
 <main class="wrap">
@@ -55,20 +68,32 @@
     <!-- Threats -->
     <div class="card" aria-label="Threats column">
       <h2>Threats</h2>
+      <div class="muted mini">Click a threat to see mapped controls.</div>
       <div id="threatList" class="list" role="listbox" aria-label="Threat list"></div>
     </div>
 
     <!-- Controls -->
     <div class="card" aria-label="Controls column">
       <h2>Controls</h2>
+      <div class="muted mini">Badges adjust per profile (SOC‑2/HIPAA/GDPR).</div>
       <div id="controlList" class="list" role="listbox" aria-label="Control list"></div>
     </div>
 
-    <!-- Evidence -->
+    <!-- Evidence & Self‑Audit Tools -->
     <div class="card" aria-label="Evidence column">
       <h2>Evidence</h2>
       <div id="evidenceCard" class="item" tabindex="0">
         <div class="muted">Select a control to view evidence.</div>
+      </div>
+      <div id="officerTools" style="margin-top:10px;display:none">
+        <div class="toolbar"><strong>Self‑Audit Tools</strong><span class="badge">Officer only</span></div>
+        <div class="tools">
+          <button class="btn" id="chkRelease">Verify release signatures</button>
+          <button class="btn" id="chkLogs">Verify log hash chain</button>
+          <button class="btn" id="chkRBAC">Snapshot RBAC assignments</button>
+          <button class="btn" id="exportAudit">Export audit_packet.json</button>
+        </div>
+        <div id="checkResults" class="mini muted" style="margin-top:6px">Run checks to populate the audit packet.</div>
       </div>
     </div>
   </section>
@@ -83,7 +108,7 @@
   </div>
 
   <footer>
-    <small>Internal audits run quarterly. All actions are written to immutable, hash‑chained logs with export to CSV/PDF for auditors.</small>
+    <small>Veltrax performs continuous internal self‑audits. Controls emit immutable, hash‑chained logs; compliance officers can export full evidence packets on demand.</small>
   </footer>
 </main>
 
@@ -91,15 +116,9 @@
 // ========= Inline JSON model ========= //
 const MODEL = {
   profiles: {
-    soc2: {
-      badges: { required:['AuthN/Z','Change mgmt','Logging','Encryption'], recommended:['RAG guardrails','Data minimization'], optional:['Quorum updates'] }
-    },
-    hipaa: {
-      badges: { required:['AuthN/Z','Audit logging','Encryption'], recommended:['PII redaction','Data minimization'], optional:['Quorum updates'] }
-    },
-    gdpr: {
-      badges: { required:['Data minimization','Right-to-erasure','Consent'], recommended:['PII redaction','Logging'], optional:['Quorum updates'] }
-    }
+    soc2: { badges: { required:['AuthN/Z','Change mgmt','Logging','Encryption'], recommended:['RAG guardrails','Data minimization'], optional:['Quorum updates'] } },
+    hipaa: { badges: { required:['AuthN/Z','Audit logging','Encryption'], recommended:['PII redaction','Data minimization'], optional:['Quorum updates'] } },
+    gdpr: { badges: { required:['Data minimization','Right-to-erasure','Consent'], recommended:['PII redaction','Logging'], optional:['Quorum updates'] } }
   },
   threats: [
     { id:'data_exfil', name:'Data exfiltration', map:['rbac','encrypt_rest','dmz_verify','logging'] },
@@ -109,9 +128,9 @@ const MODEL = {
     { id:'privilege_escalation', name:'Privilege escalation', map:['rbac','audit_trail','rate_limit','logging'] }
   ],
   controls: {
-    rbac: { name:'Role-Based Access Control', evidence:'fastapi_rbac' },
+    rbac: { name:'Role‑Based Access Control', evidence:'fastapi_rbac' },
     encrypt_rest: { name:'Encryption at Rest', evidence:'policy_encrypt' },
-    dmz_verify: { name:'DMZ Verify & Stage', evidence:'dmz_verify' },
+    dmz_verify: { name:'Boundary Verify & Stage', evidence:'dmz_verify' },
     logging: { name:'Immutable Logging', evidence:'log_policy' },
     prompt_block: { name:'Prompt Blocklist', evidence:'prompt_block' },
     rag_guard: { name:'RAG Guardrails', evidence:'rag_guard' },
@@ -128,8 +147,8 @@ const MODEL = {
       code:`{\n  "keys": [{\n    "kty": "RSA",\n    "kid": "veltrax-core-1",\n    "use": "sig",\n    "alg": "RS256",\n    "n": "<modulus>",\n    "e": "AQAB"\n  }]\n}`
     },
     fastapi_rbac: {
-      title:'FastAPI RBAC decorator',
-      code:`from fastapi import Depends, HTTPException\nfrom .auth import current_user\n\nROLE_PERMS = {\n  'analyst': {'read'},\n  'auditor': {'read','export'},\n  'admin': {'read','export','write'}\n}\n\ndef require(*perms):\n  def wrapper(user=Depends(current_user)):\n    allowed = set()\n    for r in user.roles:\n      allowed |= ROLE_PERMS.get(r, set())\n    if not set(perms) <= allowed:\n      raise HTTPException(status_code=403)\n  return wrapper\n\n@app.get('/roi/export')\n@require('export')\nasync def export_roi(...): ...`
+      title:'FastAPI RBAC + Compliance Officer role',
+      code:`from fastapi import Depends, HTTPException\nfrom .auth import current_user\n\nROLE_PERMS = {\n  'analyst': {'read'},\n  'auditor': {'read','export'},\n  'compliance_officer': {'read','export','approve','attest'},\n  'admin': {'read','export','write'}\n}\n\ndef require(*perms):\n  def wrapper(user=Depends(current_user)):\n    allowed=set()\n    for r in user.roles: allowed |= ROLE_PERMS.get(r,set())\n    if not set(perms) <= allowed: raise HTTPException(status_code=403)\n  return wrapper\n\n@app.get('/audit/packet')\n@require('export','attest')\nasync def audit_packet(...): ...`
     },
     release_manifest: {
       title:'Release Manifest (signatures)',
@@ -140,7 +159,7 @@ const MODEL = {
       code:`collection:\n  purpose: [fraud_detection, kyc]\n  retention_days: 365\n  required_fields: [txn_id, amount, timestamp]\n  prohibited_fields: [raw_ssn, raw_ccn]\n  review: quarterly`
     },
     dmz_verify: {
-      title:'DMZ Agent Verify (pseudocode)',
+      title:'Boundary Agent Verify (pseudocode)',
       code:`def handle_bundle(path):\n  m = load_manifest(path)\n  for art in m.artifacts:\n    verify_signature(art, m.signatures)\n    scan(art)\n  stage_to_core(m)\n  write_audit_event('bundle.applied', m.version)`
     },
     policy_encrypt: {
@@ -181,13 +200,14 @@ const MODEL = {
 // ========= DOM helpers ========= //
 const $ = (id)=>document.getElementById(id);
 const threatList=$('threatList'), controlList=$('controlList'), evidenceCard=$('evidenceCard');
-const profileSel=$('profile');
+const profileSel=$('profile'), roleSel=$('role'), roleBadge=$('roleBadge');
 
 function badgeFor(controlKey){
   const prof=MODEL.profiles[profileSel.value];
   const {required=[], recommended=[], optional=[]} = prof.badges;
-  if(required.includes(mapName(controlKey))) return '<span class="pill req">Required</span>';
-  if(recommended.includes(mapName(controlKey))) return '<span class="pill rec">Recommended</span>';
+  const label = mapName(controlKey);
+  if(required.includes(label)) return '<span class="pill req">Required</span>';
+  if(recommended.includes(label)) return '<span class="pill rec">Recommended</span>';
   return '<span class="pill opt">Optional</span>';
 }
 function mapName(key){
@@ -200,9 +220,7 @@ function renderThreats(){
   threatList.innerHTML='';
   MODEL.threats.forEach(t=>{
     const div=document.createElement('button');
-    div.className='item';
-    div.setAttribute('role','option');
-    div.setAttribute('aria-label',t.name);
+    div.className='item'; div.setAttribute('role','option'); div.setAttribute('aria-label',t.name);
     div.textContent=t.name;
     div.addEventListener('click',()=> selectThreat(t.id));
     div.addEventListener('keydown',(e)=>{ if(e.key==='Enter') selectThreat(t.id); });
@@ -235,12 +253,46 @@ function selectControl(key){
   const ekey=MODEL.controls[key].evidence;
   const e=MODEL.evidence[ekey];
   evidenceCard.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><strong>${e.title}</strong></div><button class="btn" id="copyBtn">Copy</button></div><pre><code>${escapeHtml(e.code)}</code></pre>`;
-  document.getElementById('copyBtn').addEventListener('click',()=>{
-    navigator.clipboard.writeText(e.code).then(()=>{ document.getElementById('copyBtn').textContent='Copied!'; setTimeout(()=>document.getElementById('copyBtn').textContent='Copy',900); });
-  });
+  $('copyBtn').addEventListener('click',()=>{ navigator.clipboard.writeText(e.code).then(()=>{ $('copyBtn').textContent='Copied!'; setTimeout(()=>$('copyBtn').textContent='Copy',900); }); });
 }
 
 function escapeHtml(s){ return s.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+// Officer mode UI
+roleSel.addEventListener('change',()=>{
+  const isOfficer = roleSel.value==='officer';
+  $('officerTools').style.display = isOfficer ? 'block':'none';
+  roleBadge.textContent = 'Mode: ' + (isOfficer?'Compliance Officer':'Viewer');
+});
+
+// Self-audit checks (simulated, fast)
+const checks = { release:null, logs:null, rbac:null };
+$('chkRelease').addEventListener('click',()=>{
+  checks.release = { ts: new Date().toISOString(), manifest_version:'24.10.3', artifacts:2, signatures_verified:true, quorum:'2/2' };
+  renderChecks();
+});
+$('chkLogs').addEventListener('click',()=>{
+  checks.logs = { ts:new Date().toISOString(), entries_checked: 2048, hash_chain_ok:true, gaps:0 };
+  renderChecks();
+});
+$('chkRBAC').addEventListener('click',()=>{
+  checks.rbac = { ts:new Date().toISOString(), roles:['analyst','auditor','compliance_officer','admin'], users_with_officer:3 };
+  renderChecks();
+});
+
+function renderChecks(){
+  const parts=[];
+  if(checks.release) parts.push(`Release: ${checks.release.quorum} signatures — ${checks.release.signatures_verified? 'OK':'FAIL'}`);
+  if(checks.logs) parts.push(`Logs: ${checks.logs.entries_checked} entries — ${checks.logs.hash_chain_ok? 'OK':'FAIL'}`);
+  if(checks.rbac) parts.push(`RBAC: officer users ${checks.rbac.users_with_officer}`);
+  $('checkResults').innerHTML = parts.length? parts.map(x=>`<span class="ok">${x}</span>`).join(' · ') : 'Run checks to populate the audit packet.';
+}
+
+$('exportAudit').addEventListener('click',()=>{
+  const packet = { profile: profileSel.value, role: roleSel.value, selected:{ threat: currentThreat, control: currentControl }, checks, ts: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(packet,null,2)], {type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='audit_packet.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+});
 
 // Profile toggle influences badges
 profileSel.addEventListener('change',()=>{ if(currentThreat) renderControls(); });
