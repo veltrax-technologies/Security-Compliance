@@ -28,7 +28,8 @@
   .warn{background:rgba(255,180,84,.14);color:var(--warn);border-color:rgba(255,180,84,.35)}
   .grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px;margin-top:14px}
   .list{display:flex;flex-direction:column;gap:8px}
-  .item{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--surface);cursor:pointer}
+  /* UPDATED: ensure pill text is white in dark theme (and dark in light theme) */
+  .item{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--surface);cursor:pointer;color:var(--text) !important}
   .item[aria-current="true"]{outline:2px solid var(--accent)}
   pre{background:#0c1220;border:1px solid #1f2b44;border-radius:10px;padding:10px;overflow:auto;color:#dfe8ff}
   code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
