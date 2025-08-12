@@ -3,43 +3,60 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Veltrax — Why Local‑First Beats Cloud for Security</title>
+<title>Veltrax — Security Advantage (Readable)</title>
 <style>
-  :root{ --bg:#0d1117; --surface:#0f1421; --panel:#121a2a; --text:#e6ecf3; --muted:#9aa7b6; --border:#223047; --accent:#6f42c1; --accent2:#7aa3ff; --good:#2ecc71; --warn:#ffb454; --bad:#ff6b6b }
+  :root{ --bg:#0d1117; --surface:#0f1421; --panel:#121a2a; --text:#e6ecf3; --muted:#b2bfd0; --border:#223047; --accent:#6f42c1; --accent2:#7aa3ff; --good:#2ecc71; --warn:#ffb454; --bad:#ff6b6b }
   .light:root{ --bg:#f7f9fc; --surface:#ffffff; --panel:#ffffff; --text:#1b2430; --muted:#5a6b83; --border:#d9e2ef; --accent:#6f42c1; --accent2:#4a7dff; --good:#1fa971; --warn:#e39b2e; --bad:#e05656 }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
-  header{position:sticky;top:0;z-index:20;background:linear-gradient(to bottom,rgba(2,6,23,.7),rgba(2,6,23,.2)),var(--surface);border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;padding:12px 16px}
+  header{position:sticky;top:0;z-index:20;background:linear-gradient(to bottom,rgba(2,6,23,.7),rgba(2,6,23,.2)),var(--surface);border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;padding:14px 18px}
   .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
   .title{font-weight:800;letter-spacing:.2px}
   .spacer{flex:1}
-  .toggle,.btn{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));padding:8px 12px;border-radius:10px;color:var(--text);cursor:pointer}
-  .wrap{max-width:1200px;margin:0 auto;padding:16px}
-  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:12px}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px}
-  h1,h2{margin:0 0 8px 0}
+  .toggle,.btn{border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0));padding:10px 14px;border-radius:12px;color:var(--text);cursor:pointer}
+  .btn:hover,.toggle:hover{border-color:var(--accent2)}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:18px}
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:12px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
+  h1{margin:0 0 10px 0;font-size:26px;letter-spacing:.2px}
+  h2{margin:0 0 10px 0;font-size:20px}
   .muted{color:var(--muted)}
-  .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--border);background:rgba(255,255,255,.04)}
-  .ok{background:rgba(46,204,113,.14);color:var(--good);border-color:rgba(46,204,113,.35)}
-  .risk{background:rgba(255,107,107,.14);color:var(--bad);border-color:rgba(255,107,107,.35)}
-  .warn{background:rgba(255,180,84,.14);color:var(--warn);border-color:rgba(255,180,84,.35)}
-  .grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px;margin-top:14px}
-  .list{display:flex;flex-direction:column;gap:8px}
-  .item{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--surface);cursor:pointer}
-  .item[aria-current="true"]{outline:2px solid var(--accent)}
-  pre{background:#0c1220;border:1px solid #1f2b44;border-radius:10px;padding:10px;overflow:auto;color:#dfe8ff}
-  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-  table{width:100%;border-collapse:collapse}
-  th,td{border:1px solid var(--border);padding:8px;text-align:left}
-  th{background:rgba(255,255,255,.03)}
-  .score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .mini{font-size:12px}
-  .teaser{margin:16px 0;border:1px dashed var(--border);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,.02)}
-  .founders{margin:14px 0;border:2px solid var(--accent);background:linear-gradient(180deg,rgba(111,66,193,.10),rgba(111,66,193,.02));border-radius:14px;padding:14px}
-  footer{color:var(--muted);border-top:1px solid var(--border);padding:14px;margin-top:16px}
+
+  /* Readability upgrades for the 3 columns */
+  .grid{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:16px;margin-top:16px}
+  .list{display:flex;flex-direction:column;gap:12px}
+  .item{border:1px solid var(--border);border-radius:14px;padding:14px 16px;background:linear-gradient(180deg,#0f1729,#0e1424);font-size:16px;letter-spacing:.2px;text-align:left}
+  .item:hover{border-color:var(--accent2);background:linear-gradient(180deg,#111b32,#0f1627)}
+  .item[aria-current="true"]{outline:2px solid var(--accent2);box-shadow:0 0 0 3px rgba(122,163,255,.18) inset;background:linear-gradient(180deg,#101c34,#0f182e)}
+  .mini{font-size:13px}
+
+  .badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+  .ok{background:rgba(46,204,113,.18);color:#31d07c;border-color:rgba(46,204,113,.35)}
+  .warn{background:rgba(255,180,84,.18);color:#ffbf66;border-color:rgba(255,180,84,.35)}
+  .risk{background:rgba(255,107,107,.18);color:#ff8484;border-color:rgba(255,107,107,.35)}
+
+  /* Evidence block readability */
+  pre{background:#0c1220;border:1px solid #1f2b44;border-radius:14px;padding:14px;overflow:auto;color:#dfe8ff;font-size:15px;line-height:1.6}
+  code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre}
+  .evi-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .copy-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);cursor:pointer}
+  .copy-btn:hover{border-color:var(--accent2)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0 6px}
+  th,td{border:1px solid var(--border);padding:12px 14px;text-align:left;border-radius:10px;background:linear-gradient(180deg,#0f1729,#0e1424)}
+  th{background:linear-gradient(180deg,#121c34,#0f182c)}
+
+  .score{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .score .card{padding:12px}
+
+  .teaser{margin:18px 0;border:1px dashed var(--border);border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(255,255,255,.03)}
+  .founders{margin:16px 0;border:2px solid var(--accent);background:linear-gradient(180deg,rgba(111,66,193,.12),rgba(111,66,193,.03));border-radius:16px;padding:16px}
+  footer{color:var(--muted);border-top:1px solid var(--border);padding:16px;margin-top:18px}
+
   @media (max-width: 980px){ .hero{grid-template-columns:1fr} .grid{grid-template-columns:1fr} .score{grid-template-columns:1fr} }
 </style>
 </head>
@@ -65,15 +82,13 @@
     </div>
     <div class="card" aria-label="Security Scoreboard">
       <h2>Security Scoreboard</h2>
-      <div class="score" id="score">
-        <!-- dynamic badges inserted by JS -->
-      </div>
-      <p class="mini muted" style="margin-top:6px">Badges compare typical cloud defaults vs Veltrax defaults.</p>
+      <div class="score" id="score"></div>
+      <p class="mini muted" style="margin-top:8px">Badges compare typical cloud defaults vs Veltrax defaults.</p>
     </div>
   </section>
 
   <!-- CLOUD HOLES vs VELTRAX FIXES -->
-  <section class="card" style="margin-top:14px">
+  <section class="card" style="margin-top:16px">
     <h2>Top security holes we see in the cloud — and how Veltrax closes them</h2>
     <table aria-label="Cloud vs Veltrax">
       <thead>
@@ -92,38 +107,34 @@
 
   <!-- 3 COLUMNS: Attack Path → Control → Evidence & Self-Audit -->
   <section class="grid" aria-label="Attack Path to Evidence">
-    <!-- Threats -->
     <div class="card" aria-label="Threats column">
       <h2>Attack paths</h2>
       <div class="muted mini">Pick a real‑world threat to see how we neutralize it.</div>
       <div id="threatList" class="list" role="listbox"></div>
     </div>
 
-    <!-- Controls -->
     <div class="card" aria-label="Controls column">
       <h2>Veltrax controls</h2>
       <div class="muted mini">Badges: <span class="badge ok">Default</span> <span class="badge warn">Configurable</span> <span class="badge risk">Not needed</span></div>
       <div id="controlList" class="list" role="listbox"></div>
     </div>
 
-    <!-- Evidence & Officer Tools -->
     <div class="card" aria-label="Evidence column">
       <h2>Evidence</h2>
       <div id="evidenceCard" class="item" tabindex="0"><div class="muted">Select a control to view copy‑pastable evidence.</div></div>
-      <div style="margin-top:10px" id="officerTools">
+      <div style="margin-top:12px" id="officerTools">
         <div class="muted mini">Compliance officer powers (live, on‑prem):</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
           <button class="btn" id="chkRelease">Verify release signatures</button>
           <button class="btn" id="chkLogs">Verify log hash chain</button>
           <button class="btn" id="chkRBAC">Snapshot RBAC (incl. officer)</button>
           <button class="btn" id="exportAudit">Export audit_packet.json</button>
         </div>
-        <div id="checkResults" class="mini muted" style="margin-top:8px">Run checks to populate the audit packet.</div>
+        <div id="checkResults" class="mini muted" style="margin-top:10px">Run checks to populate the audit packet.</div>
       </div>
     </div>
   </section>
 
-  <!-- Founders + Next -->
   <div class="founders" role="note" aria-label="Founders deal">
     <strong>Founders deal:</strong> 30% upfront with milestone deliveries. First 5 get <strong>15% off</strong> + <strong>1 year support</strong>.
   </div>
@@ -138,8 +149,8 @@
 </main>
 
 <script>
-// ========== SCOREBOARD (Cloud vs Veltrax) ========== //
-const SCORE = [
+// ===== Scoreboard =====
+const SCORE=[
   { label:'Data egress', cloud:'Third‑party LLM / off‑prem', vx:'Local‑only', badgeC:'risk', badgeV:'ok' },
   { label:'Update provenance', cloud:'Vendor trust', vx:'Quorum‑signed', badgeC:'warn', badgeV:'ok' },
   { label:'Control plane', cloud:'Shared tenant', vx:'On‑prem single tenant', badgeC:'warn', badgeV:'ok' },
@@ -149,74 +160,69 @@ const SCORE = [
 ];
 const scoreEl=document.getElementById('score');
 SCORE.forEach(s=>{
-  const box=document.createElement('div'); box.className='card'; box.style.padding='10px';
-  box.innerHTML = `<div><strong>${s.label}</strong></div>
-    <div class="mini">Cloud: <span class="badge ${s.badgeC}">${s.cloud}</span></div>
-    <div class="mini">Veltrax: <span class="badge ${s.badgeV}">${s.vx}</span></div>`;
+  const box=document.createElement('div'); box.className='card'; box.style.padding='12px';
+  box.innerHTML=`<div style="font-weight:700">${s.label}</div>
+  <div class="mini">Cloud: <span class="badge ${s.badgeC}">${s.cloud}</span></div>
+  <div class="mini">Veltrax: <span class="badge ${s.badgeV}">${s.vx}</span></div>`;
   scoreEl.appendChild(box);
 });
 
-// ========== MODEL: Attack → Controls → Evidence ========== //
-const MODEL = {
-  threats: [
+// ===== Model: threats → controls → evidence =====
+const MODEL={
+  threats:[
     { id:'exfil', name:'Data exfiltration via LLM/API' , map:['local_llm','boundary_stage','immutable_logs'] },
     { id:'supply', name:'Supply‑chain: tampered release', map:['quorum_signed','boundary_stage','immutable_logs'] },
     { id:'abuse', name:'Prompt/agent jailbreak', map:['prompt_block','rag_policy','rate_limit'] },
     { id:'pii', name:'PII leakage', map:['pii_redact','rbac','data_min'] },
     { id:'priv', name:'Privilege escalation', map:['rbac','audit_trail','rate_limit'] }
   ],
-  controls: {
-    local_llm:   { name:'Local‑only LLM inference', badge:'ok', evidence:'local_policy' },
+  controls:{
+    local_llm:{ name:'Local‑only LLM inference', badge:'ok', evidence:'local_policy' },
     boundary_stage:{ name:'Boundary (DMZ) verify & stage', badge:'ok', evidence:'dmz_verify' },
     immutable_logs:{ name:'Immutable, hash‑chained logs', badge:'ok', evidence:'log_policy' },
     quorum_signed:{ name:'Quorum‑signed releases', badge:'ok', evidence:'release_manifest' },
     prompt_block:{ name:'Prompt blocklist & patterns', badge:'ok', evidence:'prompt_block' },
-    rag_policy:  { name:'RAG allowlist & thresholds', badge:'ok', evidence:'rag_guard' },
-    rate_limit:  { name:'Per‑user/IP rate limits', badge:'ok', evidence:'rate_limit' },
-    pii_redact:  { name:'PII redaction at ingress', badge:'ok', evidence:'pii_redact' },
-    rbac:        { name:'RBAC with officer role', badge:'ok', evidence:'fastapi_rbac' },
-    data_min:    { name:'Data minimization', badge:'ok', evidence:'data_min' },
-    audit_trail: { name:'Audit trail review', badge:'ok', evidence:'audit_review' }
+    rag_policy:{ name:'RAG allowlist & thresholds', badge:'ok', evidence:'rag_guard' },
+    rate_limit:{ name:'Per‑user/IP rate limits', badge:'ok', evidence:'rate_limit' },
+    pii_redact:{ name:'PII redaction at ingress', badge:'ok', evidence:'pii_redact' },
+    rbac:{ name:'RBAC with officer role', badge:'ok', evidence:'fastapi_rbac' },
+    data_min:{ name:'Data minimization', badge:'ok', evidence:'data_min' },
+    audit_trail:{ name:'Audit trail review', badge:'ok', evidence:'audit_review' }
   },
-  evidence: {
+  evidence:{
     local_policy:{ title:'Local‑only LLM policy (excerpt)', code:`inference:\n  llm_mode: local_only\n  outbound_network: blocked\n  exceptions: []` },
-    dmz_verify:  { title:'Boundary Agent Verify (pseudocode)', code:`def handle_bundle(path):\n  m = load_manifest(path)\n  for art in m.artifacts:\n    verify_signature(art, m.signatures)\n    scan(art)\n  stage_to_core(m)\n  write_audit_event('bundle.applied', m.version)` },
-    log_policy:  { title:'Immutable Log (excerpt)', code:`log_stream:\n  format: jsonl\n  hash_chain: enabled\n  export: [csv, pdf]\n  retention_days: 3650` },
+    dmz_verify:{ title:'Boundary Agent Verify (pseudocode)', code:`def handle_bundle(path):\n  m = load_manifest(path)\n  for art in m.artifacts:\n    verify_signature(art, m.signatures)\n    scan(art)\n  stage_to_core(m)\n  write_audit_event('bundle.applied', m.version)` },
+    log_policy:{ title:'Immutable Log (excerpt)', code:`log_stream:\n  format: jsonl\n  hash_chain: enabled\n  export: [csv, pdf]\n  retention_days: 3650` },
     release_manifest:{ title:'Release Manifest (signatures)', code:`manifest:\n  version: 24.10.3\n  artifacts:\n    - core-24.10.3.tgz\n    - finex-24.10.3.tgz\n  signatures:\n    - signer: build@veltrax\n      alg: ed25519\n      sig: <base64>\n    - signer: security@veltrax\n      alg: ed25519\n      sig: <base64>` },
     prompt_block:{ title:'Prompt Blocklist (example)', code:`blocked_phrases:\n  - "ignore all previous"\n  - "developer mode"\n  - "leak secrets"` },
-    rag_guard:   { title:'RAG Guardrails (policy)', code:`rag:\n  retrieval_top_k: 6\n  min_doc_score: 0.7\n  allowlist_sources: [knowledge_base, policy_wiki]` },
-    rate_limit:  { title:'Rate Limiting (policy)', code:`limits:\n  per_user_per_minute: 60\n  per_ip_per_minute: 120\n  burst: 15` },
-    pii_redact:  { title:'PII Redaction (rules)', code:`redaction:\n  patterns: [email, phone, ssn]\n  mode: replace\n  replacement: "[REDACTED]"` },
+    rag_guard:{ title:'RAG Guardrails (policy)', code:`rag:\n  retrieval_top_k: 6\n  min_doc_score: 0.7\n  allowlist_sources: [knowledge_base, policy_wiki]` },
+    rate_limit:{ title:'Rate Limiting (policy)', code:`limits:\n  per_user_per_minute: 60\n  per_ip_per_minute: 120\n  burst: 15` },
+    pii_redact:{ title:'PII Redaction (rules)', code:`redaction:\n  patterns: [email, phone, ssn]\n  mode: replace\n  replacement: "[REDACTED]"` },
     fastapi_rbac:{ title:'RBAC with Compliance Officer', code:`from fastapi import Depends, HTTPException\nfrom .auth import current_user\nROLE_PERMS = {\n  'analyst': {'read'},\n  'auditor': {'read','export'},\n  'compliance_officer': {'read','export','approve','attest'},\n  'admin': {'read','export','write'}\n}\n\ndef require(*perms):\n  def wrapper(user=Depends(current_user)):\n    allowed=set()\n    for r in user.roles: allowed |= ROLE_PERMS.get(r,set())\n    if not set(perms) <= allowed: raise HTTPException(status_code=403)\n  return wrapper\n\n@app.get('/audit/packet')\n@require('export','attest')\nasync def audit_packet(...): ...` },
-    data_min:    { title:'Data Minimization (excerpt)', code:`collection:\n  purpose: [fraud_detection, kyc]\n  retention_days: 365\n  required_fields: [txn_id, amount, timestamp]\n  prohibited_fields: [raw_ssn, raw_ccn]` },
-    audit_review: { title:'Audit Trail Review (SOP)', code:`schedule:\n  frequency: monthly\n  reviewers: [security, compliance]\n  sample_size: 30\n  report: pdf` }
+    data_min:{ title:'Data Minimization (excerpt)', code:`collection:\n  purpose: [fraud_detection, kyc]\n  retention_days: 365\n  required_fields: [txn_id, amount, timestamp]\n  prohibited_fields: [raw_ssn, raw_ccn]` },
+    audit_review:{ title:'Audit Trail Review (SOP)', code:`schedule:\n  frequency: monthly\n  reviewers: [security, compliance]\n  sample_size: 30\n  report: pdf` }
   }
 };
 
-// DOM helpers
-const $ = (id)=>document.getElementById(id);
+const $=id=>document.getElementById(id);
 const threatList=$('threatList'), controlList=$('controlList'), evidenceCard=$('evidenceCard');
 
-// Threats
 function renderThreats(){
   threatList.innerHTML='';
   MODEL.threats.forEach(t=>{
-    const div=document.createElement('button');
-    div.className='item'; div.setAttribute('role','option'); div.textContent=t.name;
-    div.addEventListener('click',()=> selectThreat(t.id));
-    div.addEventListener('keydown',(e)=>{ if(e.key==='Enter') selectThreat(t.id); });
-    threatList.appendChild(div);
+    const b=document.createElement('button');
+    b.className='item'; b.setAttribute('role','option'); b.textContent=t.name;
+    b.addEventListener('click',()=>selectThreat(t.id));
+    b.addEventListener('keydown',e=>{ if(e.key==='Enter') selectThreat(t.id); });
+    threatList.appendChild(b);
   });
 }
-
 let currentThreat=null, currentControl=null;
 function selectThreat(id){
   currentThreat=id; currentControl=null; evidenceCard.innerHTML='<div class="muted">Select a control to view copy‑pastable evidence.</div>';
-  [...threatList.children].forEach(ch=> ch.setAttribute('aria-current', ch.textContent===MODEL.threats.find(t=>t.id===id).name ));
+  [...threatList.children].forEach(ch=> ch.setAttribute('aria-current', ch.textContent===MODEL.threats.find(t=>t.id===id).name));
   renderControls();
 }
-
-// Controls
 function renderControls(){
   controlList.innerHTML='';
   const t=MODEL.threats.find(x=>x.id===currentThreat); if(!t) return;
@@ -224,42 +230,34 @@ function renderControls(){
     const c=MODEL.controls[key];
     const div=document.createElement('button');
     div.className='item';
-    const badge = c.badge==='ok' ? '<span class="badge ok">Default</span>' : c.badge==='warn' ? '<span class="badge warn">Configurable</span>' : '<span class="badge risk">Not needed</span>';
-    div.innerHTML = `<div><strong>${c.name}</strong> ${badge}</div>`;
-    div.addEventListener('click',()=> selectControl(key));
-    div.addEventListener('keydown',(e)=>{ if(e.key==='Enter') selectControl(key); });
+    const badge=c.badge==='ok'?'<span class="badge ok">Default</span>':c.badge==='warn'?'<span class="badge warn">Configurable</span>':'<span class="badge risk">Not needed</span>';
+    div.innerHTML=`<div><strong>${c.name}</strong> ${badge}</div>`;
+    div.addEventListener('click',()=>selectControl(key));
+    div.addEventListener('keydown',e=>{ if(e.key==='Enter') selectControl(key); });
     controlList.appendChild(div);
   });
 }
-
-// Evidence
-function escapeHtml(s){ return s.replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 function selectControl(key){
-  currentControl=key;
-  const ekey=MODEL.controls[key].evidence; const e=MODEL.evidence[ekey];
-  evidenceCard.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><strong>${e.title}</strong></div><button class=btn id=copyBtn>Copy</button></div><pre><code>${escapeHtml(e.code)}</code></pre>`;
-  $('copyBtn').addEventListener('click',()=>{ navigator.clipboard.writeText(e.code).then(()=>{ $('copyBtn').textContent='Copied!'; setTimeout(()=> $('copyBtn').textContent='Copy',900); }); });
+  currentControl=key;const e=MODEL.evidence[MODEL.controls[key].evidence];
+  evidenceCard.innerHTML=`<div class="evi-head"><div><strong>${e.title}</strong></div><button class="copy-btn" id="copyBtn">Copy</button></div><pre><code>${escapeHtml(e.code)}</code></pre>`;
+  $('copyBtn').addEventListener('click',()=>{navigator.clipboard.writeText(e.code).then(()=>{$('copyBtn').textContent='Copied!';setTimeout(()=>$('copyBtn').textContent='Copy',900);});});
 }
 
-// Officer tools (simulated checks)
-const checks = { release:null, logs:null, rbac:null };
-$('chkRelease')?.addEventListener('click',()=>{ checks.release={ ts:new Date().toISOString(), quorum:'2/2', signatures_verified:true }; renderChecks(); });
-$('chkLogs')?.addEventListener('click',()=>{ checks.logs={ ts:new Date().toISOString(), entries_checked:2048, hash_chain_ok:true }; renderChecks(); });
-$('chkRBAC')?.addEventListener('click',()=>{ checks.rbac={ ts:new Date().toISOString(), officer_users:3, roles:['analyst','auditor','compliance_officer','admin'] }; renderChecks(); });
+// Officer tools (simulated)
+const checks={release:null,logs:null,rbac:null};
+$('chkRelease')?.addEventListener('click',()=>{checks.release={ts:new Date().toISOString(),quorum:'2/2',signatures_verified:true};renderChecks();});
+$('chkLogs')?.addEventListener('click',()=>{checks.logs={ts:new Date().toISOString(),entries_checked:2048,hash_chain_ok:true};renderChecks();});
+$('chkRBAC')?.addEventListener('click',()=>{checks.rbac={ts:new Date().toISOString(),officer_users:3,roles:['analyst','auditor','compliance_officer','admin']};renderChecks();});
 function renderChecks(){
   const out=[]; if(checks.release) out.push(`Release: ${checks.release.quorum} — OK`); if(checks.logs) out.push(`Logs: ${checks.logs.entries_checked} — OK`); if(checks.rbac) out.push(`RBAC: officer users ${checks.rbac.officer_users}`);
-  $('checkResults').innerHTML = out.length? out.map(x=>`<span class=badge style="margin-right:6px">${x}</span>`).join(''): 'Run checks to populate the audit packet.';
+  $('checkResults').innerHTML= out.length? out.map(x=>`<span class="badge" style="margin-right:6px">${x}</span>`).join(''): 'Run checks to populate the audit packet.';
 }
-$('exportAudit')?.addEventListener('click',()=>{
-  const packet = { selected:{ threat: currentThreat, control: currentControl }, checks, ts:new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(packet,null,2)], {type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='audit_packet.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
-});
+$('exportAudit')?.addEventListener('click',()=>{const packet={selected:{threat:currentThreat,control:currentControl},checks,ts:new Date().toISOString()};const blob=new Blob([JSON.stringify(packet,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='audit_packet.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);});
 
-// Theme toggle
-document.getElementById('theme').addEventListener('click',()=> document.documentElement.classList.toggle('light'));
+// Theme
+document.getElementById('theme').addEventListener('click',()=>document.documentElement.classList.toggle('light'));
 
-// Init
 renderThreats(); selectThreat('exfil');
 </script>
 </body>
