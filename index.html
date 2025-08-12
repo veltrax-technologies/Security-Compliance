@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Veltrax — Security Advantage (Readable)</title>
+<title>Veltrax — Security Advantage (Readable, High-Contrast Badges)</title>
 <style>
   :root{ --bg:#0d1117; --surface:#0f1421; --panel:#121a2a; --text:#e6ecf3; --muted:#b2bfd0; --border:#223047; --accent:#6f42c1; --accent2:#7aa3ff; --good:#2ecc71; --warn:#ffb454; --bad:#ff6b6b }
   .light:root{ --bg:#f7f9fc; --surface:#ffffff; --panel:#ffffff; --text:#1b2430; --muted:#5a6b83; --border:#d9e2ef; --accent:#6f42c1; --accent2:#4a7dff; --good:#1fa971; --warn:#e39b2e; --bad:#e05656 }
@@ -34,20 +34,21 @@
   .item[aria-current="true"]{outline:2px solid var(--accent2);box-shadow:0 0 0 3px rgba(122,163,255,.18) inset;background:linear-gradient(180deg,#101c34,#0f182e)}
   .mini{font-size:13px}
 
-  .badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
-  .ok{background:rgba(46,204,113,.18);color:#31d07c;border-color:rgba(46,204,113,.35)}
-  .warn{background:rgba(255,180,84,.18);color:#ffbf66;border-color:rgba(255,180,84,.35)}
-  .risk{background:rgba(255,107,107,.18);color:#ff8484;border-color:rgba(255,107,107,.35)}
+  /* Badges — now always white text for readability */
+  .badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:800;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff}
+  .ok{background:rgba(46,204,113,.22);border-color:rgba(46,204,113,.45);color:#fff}
+  .warn{background:rgba(255,180,84,.22);border-color:rgba(255,180,84,.45);color:#fff}
+  .risk{background:rgba(255,107,107,.22);border-color:rgba(255,107,107,.45);color:#fff}
 
   /* Evidence block readability */
   pre{background:#0c1220;border:1px solid #1f2b44;border-radius:14px;padding:14px;overflow:auto;color:#dfe8ff;font-size:15px;line-height:1.6}
   code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre}
   .evi-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
-  .copy-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);cursor:pointer}
+  .copy-btn{padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.06);cursor:pointer;color:var(--text)}
   .copy-btn:hover{border-color:var(--accent2)}
 
   table{width:100%;border-collapse:separate;border-spacing:0 6px}
-  th,td{border:1px solid var(--border);padding:12px 14px;text-align:left;border-radius:10px;background:linear-gradient(180deg,#0f1729,#0e1424)}
+  th,td{border:1px solid var(--border);padding:12px 14px;text-align:left;border-radius:10px;background:linear-gradient(180deg,#0f1729,#0e1424);color:var(--text)}
   th{background:linear-gradient(180deg,#121c34,#0f182c)}
 
   .score{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
